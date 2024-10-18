@@ -11,14 +11,12 @@ final class Json
      */
     public static function decode(string $jsonString): array
     {
-        $decoded = json_decode(
+        return json_decode(
             $jsonString,
             true,
             512,
             \JSON_THROW_ON_ERROR
         );
-
-        return $decoded;
     }
 
     /**
@@ -26,13 +24,11 @@ final class Json
      */
     public static function encode(mixed $value): string
     {
-        $encoded = json_encode(
+        return json_encode(
             $value,
             \JSON_THROW_ON_ERROR,
             512
         );
-
-        return $encoded;
     }
 
     private function __construct() {}

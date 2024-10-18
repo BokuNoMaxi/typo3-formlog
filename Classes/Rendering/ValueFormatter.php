@@ -28,7 +28,7 @@ final class ValueFormatter
     public function format($value): string
     {
         if (is_null($value)) {
-            return $this->formatNull($value);
+            return $this->formatNull();
         }
 
         if (is_scalar($value)) {
@@ -49,7 +49,7 @@ final class ValueFormatter
         );
     }
 
-    private function formatNull($value): string
+    private function formatNull(): string
     {
         return '';
     }

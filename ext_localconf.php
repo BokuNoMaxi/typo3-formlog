@@ -3,7 +3,7 @@
 use Pagemachine\Formlog\Form\Element\JSONDataElement;
 use TYPO3\CMS\Scheduler\Task\TableGarbageCollectionTask;
 
-defined('TYPO3') or die();
+defined('TYPO3') || die();
 
 $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][1490193269] = [
     'nodeName' => 'jsonData',

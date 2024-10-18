@@ -48,24 +48,24 @@ class LoggerFinisher extends AbstractFinisher implements LoggerAwareInterface
 
         try {
             $encodedFormValues = Json::encode($formValues);
-        } catch (\JsonException $e) {
+        } catch (\JsonException $jsonException) {
             $this->logger->critical('Failed to encode form values', [
-                'exception' => $e,
+                'exception' => $jsonException,
                 'formValues' => serialize($formValues),
             ]);
 
-            throw new FinisherException(sprintf('Failed to encode form values: %s', $e->getMessage()), 1677581834, $e);
+            throw new FinisherException(sprintf('Failed to encode form values: %s', $jsonException->getMessage()), 1677581834, $jsonException);
         }
 
         try {
             $encodedFinisherVariables = Json::encode($finisherVariables);
-        } catch (\JsonException $e) {
+        } catch (\JsonException $jsonException) {
             $this->logger->critical('Failed to encode finisher variables', [
-                'exception' => $e,
+                'exception' => $jsonException,
                 'finisherVariables' => serialize($finisherVariables),
             ]);
 
-            throw new FinisherException(sprintf('Failed to encode finisher variables: %s', $e->getMessage()), 1677581959, $e);
+            throw new FinisherException(sprintf('Failed to encode finisher variables: %s', $jsonException->getMessage()), 1677581959, $jsonException);
         }
 
         $data = [
@@ -124,8 +124,6 @@ class LoggerFinisher extends AbstractFinisher implements LoggerAwareInterface
 
     /**
      * Get map of configured finisher variables
-     *
-     * @return array
      */
     protected function getFinisherVariables(): array
     {

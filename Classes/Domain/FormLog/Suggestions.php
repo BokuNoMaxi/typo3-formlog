@@ -38,8 +38,7 @@ final class Suggestions
             ->groupBy($property);
 
         $result = $queryBuilder->executeQuery();
-        $suggestions = $result->fetchFirstColumn();
 
-        return $suggestions;
+        return $result->fetchFirstColumn();
     }
 }

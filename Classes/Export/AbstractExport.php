@@ -40,9 +40,8 @@ abstract class AbstractExport
     protected function getHeaders(): array
     {
         $headers = array_column($this->getColumns(), 'label');
-        $headers = array_map(fn($header) => LocalizationUtility::translate($header, 'Formlog') ?: $header, $headers);
 
-        return $headers;
+        return array_map(fn($header) => LocalizationUtility::translate($header, 'Formlog') ?: $header, $headers);
     }
 
     /**
@@ -50,9 +49,7 @@ abstract class AbstractExport
      */
     protected function getColumnPaths(): array
     {
-        $columnPaths = array_column($this->getColumns(), 'property');
-
-        return $columnPaths;
+        return array_column($this->getColumns(), 'property');
     }
 
     /**

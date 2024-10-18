@@ -22,6 +22,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use TYPO3\CMS\Backend\Template\ModuleTemplate;
 
 /**
  * Controller for form log management
@@ -35,17 +36,17 @@ class FormLogController extends ActionController
 
     protected FormLogEntryRepository $formLogEntryRepository;
 
-    public function __construct(protected ModuleTemplateFactory $moduleTemplateFactory) {}
-
-    public function injectFormLogEntryRepository(FormLogEntryRepository $formLogEntryRepository)
-    {
+    public function __construct(
+        protected ModuleTemplateFactory $moduleTemplateFactory,
+        FormLogEntryRepository $formLogEntryRepository
+    ){
         $this->formLogEntryRepository = $formLogEntryRepository;
     }
 
     /**
      * Initialize all actions
      */
-    public function initializeAction()
+    public function initializeAction(): void
     {
         if ($this->arguments->hasArgument('filters')) {
             $filters = $this->request->hasArgument('filters') ? $this->request->getArgument('filters') : [];
@@ -73,7 +74,9 @@ class FormLogController extends ActionController
         $paginator = new QueryResultPaginator($entries, $currentPageNumber);
         $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
 
-        $this->view->assignMultiple([
+        /** @var ModuleTemplate $moduleTemplate */
+        $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
+        $moduleTemplate->assignMultiple([
             'entries' => $paginator->getPaginatedItems(),
             'entriesCount' => count($entries),
             'filters' => $filters,
@@ -90,16 +93,8 @@ class FormLogController extends ActionController
             ],
         ]);
 
-        GeneralUtility::makeInstance(PageRenderer::class)->addRequireJsConfiguration([
-            'paths' => [
-                'TYPO3/CMS/Formlog/moment' => 'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min',
-            ],
-        ]);
 
-        $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
-        $moduleTemplate->setContent($this->view->render());
-
-        return $this->htmlResponse($moduleTemplate->renderContent());
+        return $moduleTemplate->renderResponse('Backend/FormLog/Index');
     }
 
     /**
@@ -126,8 +121,6 @@ class FormLogController extends ActionController
 
     /**
      * Prepare localized daterangepicker labels
-     *
-     * @return array
      */
     protected function prepareDaterangepickerTranslations(): array
     {

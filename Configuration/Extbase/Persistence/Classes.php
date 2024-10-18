@@ -1,7 +1,10 @@
 <?php
 
+use Pagemachine\Formlog\Domain\Model\FormLogEntry;
+use Pagemachine\Formlog\Domain\Model\FormLogEntry\Page;
+
 return [
-    \Pagemachine\Formlog\Domain\Model\FormLogEntry::class => [
+    FormLogEntry::class => [
         'tableName' => 'tx_formlog_entries',
         'properties' => [
             'submissionDate' => [
@@ -12,7 +15,7 @@ return [
             ],
         ],
     ],
-    \Pagemachine\Formlog\Domain\Model\FormLogEntry\Page::class => [
+    Page::class => [
         'tableName' => 'pages',
     ],
 ];

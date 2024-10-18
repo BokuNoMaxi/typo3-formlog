@@ -29,25 +29,16 @@ class Filters implements \IteratorAggregate, \Countable
         $this->submissionDate = $submissionDate ?: new DateRangeFilter();
     }
 
-    /**
-     * @return ValueFilter
-     */
     public function getPageTitle(): ValueFilter
     {
         return $this->pageTitle;
     }
 
-    /**
-     * @return ValueFilter
-     */
     public function getIdentifier(): ValueFilter
     {
         return $this->identifier;
     }
 
-    /**
-     * @return DateRangeFilter
-     */
     public function getSubmissionDate(): DateRangeFilter
     {
         return $this->submissionDate;
