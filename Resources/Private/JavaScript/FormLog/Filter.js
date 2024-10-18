@@ -1,3 +1,2 @@
-define(['./Filter/SelectFilter', './Filter/SubmissionDateFilter'], function() {
-
-});
+import './Filter/SelectFilter';
+import './Filter/SubmissionDateFilter';
